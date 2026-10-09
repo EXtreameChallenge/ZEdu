@@ -1,0 +1,123 @@
+{
+  "name": "zedu-duo-frontend",
+  "description": "ZEdu Duo 多智能体 AI 教育平台桌面端",
+  "author": "ZEdu Duo Team",
+  "private": true,
+  "version": "4.0.41",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test:unit": "node --test tests/i18n.test.mjs tests/electron-main.test.mjs tests/markdown.test.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:all": "vitest run && npm run test:unit",
+    "analyze": "vite build --mode analyze",
+    "electron": "wait-on http://127.0.0.1:5173 && electron .",
+    "electron:dev": "concurrently -k \"npm run dev\" \"npm run electron\"",
+    "electron:build": "npm run build && electron-builder",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "axios": "^1.7.0",
+    "echarts": "^6.1.0",
+    "framer-motion": "^13.2.0",
+    "highlight.js": "^11.12.0",
+    "katex": "^0.18.7",
+    "lucide-react": "^0.460.0",
+    "mermaid": "^12.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^9.0.0",
+    "react-router-dom": "^7.0.0",
+    "reactflow": "^11.11.0",
+    "recharts": "^2.13.0",
+    "rehype-highlight": "^7.0.2",
+    "rehype-katex": "^7.0.1",
+    "remark-gfm": "^4.0.0",
+    "remark-math": "^6.0.0",
+    "web-vitals": "^6.2.2",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "@vitest/coverage-v8": "^5.0.2",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^10.0.5",
+    "electron": "^44.3.0",
+    "electron-builder": "^25.1.8",
+    "eslint": "^10.11.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.12.0",
+    "husky": "^9.1.7",
+    "jsdom": "^30.1.1",
+    "lint-staged": "^17.6.0",
+    "postcss": "^8.4.49",
+    "prettier": "^3.9.9",
+    "rollup-plugin-visualizer": "^7.1.1",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.71.0",
+    "vite": "^6.0.0",
+    "vitest": "^5.0.2",
+    "wait-on": "^9.1.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{css,md,json}": [
+      "prettier --write"
+    ]
+  },
+  "build": {
+    "appId": "com.zedu.duo",
+    "productName": "ZEdu Duo",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "!node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "build/backend",
+        "to": "backend"
+      },
+      {
+        "from": "build/seed",
+        "to": "seed"
+      },
+      {
+        "from": "build/env",
+        "to": "env"
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "ZEduDuo-Setup-${version}.exe",
+      "include": "build/installer.nsh"
+    }
+  }
+}
