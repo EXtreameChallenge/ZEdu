@@ -1,331 +1,316 @@
-# ZEdu —— 让 AI 替你去教，让你自己去学
-
-<p align="center">
-  <img src="https://img.shields.io/github/stars/EXtreameChallenge/ZEdu?style=for-the-badge&color=7c3aed" alt="Stars">
-  <img src="https://img.shields.io/github/forks/EXtreameChallenge/ZEdu?style=for-the-badge&color=7c3aed" alt="Forks">
-  <img src="https://img.shields.io/badge/Java-17-7c3aed?style=for-the-badge&logo=openjdk" alt="Java 17">
-  <img src="https://img.shields.io/badge/Spring_Boot-3.3.5-7c3aed?style=for-the-badge&logo=springboot" alt="Spring Boot">
-  <img src="https://img.shields.io/badge/React-19-7c3aed?style=for-the-badge&logo=react" alt="React 19">
-  <img src="https://img.shields.io/badge/Electron-33-7c3aed?style=for-the-badge&logo=electron" alt="Electron 33">
-  <img src="https://img.shields.io/badge/AI-Multi_Agent-7c3aed?style=for-the-badge&logo=openai" alt="Multi Agent">
-  <img src="https://img.shields.io/badge/Platform-Windows-7c3aed?style=for-the-badge&logo=windows" alt="Windows">
-  <img src="https://img.shields.io/badge/License-MIT-7c3aed?style=for-the-badge" alt="License">
-</p>
-
+---
+AIGC:
+  ContentProducer: '001191110102MAD55U9H0F10002'
+  ContentPropagator: '001191110102MAD55U9H0F10002'
+  Label: '1'
+  ProduceID: 'f7e2edf6-aedb-4d2f-b4e8-3ee78c421756'
+  PropagateID: 'f7e2edf6-aedb-4d2f-b4e8-3ee78c421756'
+  ReservedCode1: 'e82677f0-1651-4af2-8e17-98f70e9540a3'
+  ReservedCode2: 'e82677f0-1651-4af2-8e17-98f70e9540a3'
 ---
 
-## 你不敢承认的三件事
+# ZEdu Duo
 
-> 期末考试前三天，你翻开一本崭新的教材，发现自己除了老师画的重点，什么都看不懂。你打开 DeepSeek，问了几个问题，得到一堆看起来都对但不知道先看哪个的答案。你把手机锁屏，决定"明天再学"——然后这个明天，从大一拖到了大四。
+> 双端双角色多智能体AI教育平台 — 让学生真正学会，而不是直接给答案
 
-> 你花 39 块买了一个 AI 刷题会员，做了 200 道题，正确率从 40% 涨到了 42%。你知道自己在进步，但说不出来进步了什么。下一次考试换了一个问法，你又不会了——因为你的"学会"只是记住了答案。
+**当前版本：v4.0.41** | [查看更新日志](CHANGELOG.md)
 
-> 你的毕设答辩 PPT 上写着"基于深度学习的 XX 系统"，评委问你这个模型为什么选 ResNet 不选 VGG，你支支吾吾说了三分钟。不是因为你没准备——是你真的不理解。你只是跑了教程里的代码，改了数据集路径，然后祈祷没人深问。
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-green.svg)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-19+-61dafb.svg)](https://react.dev/)
+[![LangGraph](https://img.shields.io/badge/LangGraph-0.2+-orange.svg)](https://langchain-ai.github.io/langgraph/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-4.0.41-gold.svg)](CHANGELOG.md)
 
-如果你觉得上面任意一条像是在偷看你的生活——不用慌，你不是一个人。整个中国高等教育体系里，99% 的学习者都陷在同一个泥潭里：**有资源没路径，有答案没理解，有 AI 没效果。**
+## 项目简介
 
----
+ZEdu Duo 是一个基于多智能体协作的AI教育平台。"Duo"有三重含义：
+- **双端**：Web端 + 桌面端（Electron）
+- **双角色**：教师端（建课/班级/统计）+ 学生端（学习/练习/复习）
+- **双闭环**：学习闭环（画像→诊断→路径→学习→评估）+ 错题闭环（8维诊断→溯源→变式→掌握）
 
-## 别人给你的是一本答案，ZEdu 给你的是一套学习系统
+### 产品定位：不给答案的 AI 陪练
 
-市面上所有的 AI 学习工具都在做同一件事——**把答案喂到你嘴边**。你问 "泰勒展开怎么理解"，它扔给你一段定义加一个例题。你把答案抄到笔记本上，关上页面，第二天原样忘干净。
+当通用 AI 比谁给答案更快时，我们反着做：四阶段 Agent 流水线（画像→规划→苏格拉底引导→分题型验证）让学生自己推出答案。每一次作答实时更新 BKT 掌握度、自动沉淀 8 维错因诊断、按遗忘曲线安排复习——聊天记录变成学情数据，学情数据反过来决定下一题怎么教。全流程本地 SQLite 存储加教师端 AI 输出审批中心，学生练得放心、老师管得住。
 
-这不是你的问题。这是产品设计的问题。
+## 版本演进
 
-一个把"给答案"当成"教学"的工具，和一本带答案的习题集没有本质区别。你需要的不是更多答案，是有人逼你去想、去犯错、去发现自己哪里不懂。
+> ZEdu 是一个持续演进的大项目。本仓库（ZEdu Duo）为当前主版本，历史过渡版本（ZEdu v6.x、ZEdu Lite、Liquid Glass、Experiment）均属于同一项目体系。完整谱系见 [docs/version-history.md](docs/version-history.md)。
 
-ZEdu 为此而生。它不给你答案——它给你 **17 个 AI 智能体协作形成的完整学习系统**，覆盖从"我不知道自己不知道什么"到"这个知识点我彻底掌握了"的全过程。
+| 版本 | 时间 | 定位 |
+|------|------|------|
+| ZEdu v6.x | 2026-07 | 第一代 AI 私教（Java / Spring Boot / LangChain4j） |
+| ZEdu Lite | 2026-08 | 轻量重装版（Python / FastAPI，5 分钟开箱即用，教育 AI 核心验证） |
+| **ZEdu Duo（本仓库）** | 2026-09 至今 | 双端双角色多智能体平台，当前 v4.0.41 |
+| ZEdu Liquid Glass / Experiment | 2026-09 | 设计 / 实验变体（与 Duo 同构） |
 
----
+### 核心创新：四阶段Agent流水线
 
-## 17 个 AI 智能体，各司其职，而不是一个万能聊天框
+不同于传统AI助教直接给答案，ZEdu Duo通过四个专业Agent协作，引导学生自主思考：
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     AgentOrchestrator  协调中枢                        │
-│                                                                     │
-│   ┌─────────┐  ┌─────────┐  ┌──────────┐  ┌──────────────────┐    │
-│   │画像分析  │  │路径规划  │  │知识图谱  │  │资源类型→Agent分派 │    │
-│   │Profile  │→│Planner  │→│   KG     │→│ ResourceRegistry  │    │
-│   └─────────┘  └─────────┘  └──────────┘  └──────┬───────────┘    │
-│                                                   │                │
-│          ┌────────────────────────────────────────┼─────────────┐  │
-│          │           DynamicAgentGraph 动态协作执行层             │  │
-│          │  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐       │  │
-│          │  │苏格拉│ │深度  │ │错题  │ │作文  │ │口语  │ ...   │  │
-│          │  │底辅导│ │推理  │ │诊断  │ │批改  │ │评测  │       │  │
-│          │  └──────┘ └──────┘ └──────┘ └──────┘ └──────┘       │  │
-│          └──────────────────────────────────────────────────────┘  │
-│                                                                     │
-│   ┌─────────────────────────────────────────────────────────────┐  │
-│   │                       三大闭环                               │  │
-│   │  🔄 学习闭环：画像→诊断→ZPD→路径→多Agent生成→评估→画像更新   │  │
-│   │  🔄 错题闭环：采集→8维诊断→溯源→深度推理→针对性练习→掌握     │  │
-│   │  🔄 知识闭环：上传→分块→Chroma向量化→RAG检索→生成→FSRS追踪  │  │
-│   └─────────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────┘
+Profiler（画像分析）→ Planner（路径规划）→ Tutor（苏格拉底引导）→ Verifier（答案验证）
 ```
 
-没有一键生成答案的快捷方式。每一个 AI 智能体都在做它最擅长的那件事，合在一起，才叫"教"。
-
----
-
-## 然后呢？—— 每个功能都在回答同一个问题
-
-### 🧠 苏格拉底式辅导 —— 解决"你不知道自己不知道"
-
-> 你问 AI："什么是时间复杂度？"它给你一段定义。你看了，觉得懂了。第二天遇到一道时间复杂度分析题，你又错了——因为你从来就没理解，你只是以为自己理解了。
-
-ZEdu 的 TutorAgent 拒绝直接回答。它内置一个**苏格拉底状态机**：你说"我不明白"，它不解释——它反问。它追问，它让你自己推导，它在你将要放弃时轻推一把。你回答得出来，说明你真的懂了。你回答不出来，它会标记这个知识节点的掌握度，并触发 PlannerAgent 为你重新规划学习路径。
-
-这才是教学。不是喂答案，是逼你想。
-
-```
-用户: "回溯算法到底在干什么？"
-
-TutorAgent: "我们先换一个问题——如果你在迷宫里走到了死胡同，你会怎么办？"
-用户: "退回去，换一条路走。"
-
-TutorAgent: "精确。那在解数独的时候，如果你填了一个数字后导致后续所有格子都无解，你会怎么做？"
-用户: "把刚才填的数字擦掉，换个数字试。"
-
-TutorAgent: "你已经自己总结出了回溯算法的核心思想。现在试着用你的话定义它。"
-用户: "……一种试错+撤销的搜索策略。"
-
-TutorAgent: "满分。但你刚才的推导过程有一个跳步——你是怎么判断'后续所有格子都无解'的？这才是回溯算法里最贵的部分。"
-```
-
----
-
-### ❌ 错题 8 维诊断 —— 解决"你刷了一百遍还错同一类题"
-
-> 你有一个错题本，里面记了 50 道题。考试前你翻了一遍，然后考试时你又错了——因为你的错题本只有一个维度："这道题我做错了"。它没告诉你错在哪、为什么错、同类错题有多少、知识上游哪个环节断了。
-
-ZEdu 的 WrongQuestionAnalysisAgent 对每一道错题执行 **8 个维度的诊断**：
-
-| 维度 | 诊断问题 |
-|------|---------|
-| 概念理解 | 你真的理解这道题涉及的知识概念吗？ |
-| 公式应用 | 你选的公式对吗？条件判断对了吗？ |
-| 计算过程 | 是算错了还是思路错了？ |
-| 思维逻辑 | 你的推理链条断了在哪一步？ |
-| 审题能力 | 你读题的时候漏掉了哪些关键信息？ |
-| 知识关联 | 这道题依赖的上游知识点你掌握了吗？ |
-| 错误模式 | 你的错误属于哪一类模式？（混淆型 / 遗漏型 / 推理跳跃型） |
-| 元认知 | 你为什么会觉得这道题"不难"但实际上做错了？ |
-
-诊断完之后，KnowledgeTracer 会沿着知识图谱向上追溯——找到那个**真正的薄弱点**。然后 DeepReasoningAgent 用可视化推演向你展示正确的解题过程。最后 QuizAgent 生成一组**针对你的薄弱点的变式题**——你不止改了这一道错题，你把这个知识漏洞彻底补上了。
-
-这就是错题闭环。不是"看一眼正确答案就过"，是追根溯源，斩草除根。
-
----
-
-### 📐 深度推理可视化 —— 解决"答案看得懂，自己想不到"
-
-> 你打开参考答案，看到 "由拉格朗日中值定理可得"，然后你陷入了沉思——这个定理在题目里的哪个条件触发了它？如果你自己做，你怎么知道要想到这个定理？
-
-DeepReasoningAgent 不输出"由 XX 定理可得"。它输出一张**可视化的推理路径图**（类似学而思 MathGPT 的解题过程还原），展示：
-- **已知条件** → **推导出什么** → **用到了哪个定理/公式** → **下一步推理** → **结论**
-- 每一步标注推理依据和可能的替代路径
-- 如果某一步有多个选择，它会标注"为什么不选 B 而选 A"
-
-你看到的不是"这道题怎么做"，而是"什么样的人能想到这一步"。这才是解题能力的本质——不是会背公式，是能判断什么条件下用什么工具。
-
----
-
-### ✍️ 作文四维批改 —— 解决"你的作文永远只有 80 分"
-
-> 你交了一篇 800 字的议论文，老师的批语写着"结构有待优化，论证可以更深入"。你知道自己的问题——但不知道怎么改。下一篇文章，你还是 80 分。
-
-EssayGradingAgent 从 4 个维度对你作文的每一段、每一句话打分：
-
-| 维度 | 权重 | 评测内容 |
-|------|------|---------|
-| 内容立意 | 30% | 中心论点是否明确？是否切题？立意是否新颖？ |
-| 结构逻辑 | 25% | 段落衔接是否自然？论证链条是否完整？有没有逻辑跳跃？ |
-| 语言表达 | 25% | 用词是否精准？句式是否多样？有没有语病？ |
-| 规范书写 | 20% | 标点、格式、字数是否符合考试要求？ |
-
-然后呢？它不只给分——它在你的作文里**逐句标注**："这一句的论证逻辑断裂，需要在前面补充前提"、"这个词用得不准确，建议替换为 X 或 Y"。你把修改建议对着改，然后再次提交——分数涨了。你看到了反馈闭环的威力。
-
----
-
-### 🎤 讯飞 ISE 口语评测 —— 解决"你说的是英语，但 AI 听不懂的英语"
-
-> 你对着手机念了一段英语，AI 说"流利度 85 分，发音 4.2 分"。你觉得自己进步了——直到你在雅思口语考场被考官打断三次，因为你念的是"中式节奏"，重音和语调全错。
-
-ZEdu 接入**讯飞 ISE 语音评测引擎**，不是简单的"发音准不准"，而是：
-- 完整度：你是不是每个词都说完整了，还是在吞音
-- 流利度：你的停顿是自然的语义停顿，还是在纠结
-- 准确度：你的发音到底是"能听懂"还是"标准"
-- 韵律节奏：你的重音和语调是否符合目标语言的节奏模式
-
-你读一段文字，ZEdu 逐词标色——红色是严重偏音，黄色是轻微偏差，绿色是标准。你可以点开任何一句话，听到标准音和自己的录音做对比。这种反馈的颗粒度，是一个普通口语老师无法给的。
-
----
-
-### 🕸️ 知识图谱 + FSRS 间隔重复 —— 解决"你觉得你学了，但你其实忘了"
-
-> 你学了一学期的线性代数，考试前你翻目录——行列式、矩阵、特征值、二次型。你看着这些名词，觉得每个都学过，但说不清楚它们之间的关系。"行列式"和"特征值"之间到底怎么衔接的？你不知道。因为你记住的是孤岛，不是网络。
-
-KnowledgeGraphAgent 自动构建**层级知识图谱**：父节点 → 子节点 → 前置依赖 → 后续拓展。你可以直观地看到任一个知识点在整个学科里的位置。
-
-配合 FSRS（Free Spaced Repetition Scheduler）和 SM2 算法，系统会根据你的掌握度动态调整每个知识点的复习时间——你掌握得好的，少复习；你掌握得差的，高频推送；你即将遗忘的，精准提醒。
-
-不再是"翻开课本从头看"，而是"系统告诉你看哪里，看几次，什么时候看"。
-
----
-
-### 🎮 游戏化学习 —— 解决"道理我都懂，就是学不进去"
-
-> 你下载了一个番茄钟 App，用了三天，第四天你无视了它的提醒。你下载了一个打卡 App，连续打卡 7 天后断了——从此再也没打开过。
-
-ZEdu 把学习过程游戏化——连续学习获得连击成就，知识点通关解锁徽章，错题攻克获得经验值。不是为了让你沉迷，是为了让你在"不想学"的时候还能克服那一点摩擦力——多坚持五分钟。
-
----
-
-### 👨‍🏫 教师仪表盘 —— 教与学的双向可见
-
-如果你是一位老师，你会在教师仪表盘上看到班级整体的学习数据——哪些知识点普遍薄弱、哪些学生进度落后、哪些错题在全班反复出现。你可以据此调整教学重点，而不是凭感觉。"
-
----
-
-## 你的数据，不是任何人的训练集
-
-ZEdu 的所有 AI 调用通过你自己的智谱 GLM 和讯飞星火 API Key 完成，不经过任何第三方中转服务器。学习行为数据存储在你自己部署的 MySQL 里，知识库文档向量存储在你自己控制的 Chroma 中。
-
-| ZEdu 不做 | ZEdu 做 |
-|-----------|---------|
-| 收集你的聊天记录用于模型训练 | 所有对话数据存储在你自己的数据库 |
-| 将你的答题数据上传到云端分析 | 行为分析引擎本地运行 |
-| 接入第三方 SDK 做用户画像 | 所有模型调用通过你自己的 API Key |
-| 用你的作文语料喂给 AI | 作文批改即时处理，不持久化原文 |
-
-Docker Compose 一键部署到你自己的服务器，Electron 桌面端装在你的电脑上。数据在你自己手里。
-
----
-
-## 不是所有 AI 学习工具都叫 ZEdu
-
-| | ZEdu | ChatGPT 对话 | 传统刷题 App | 网课平台 |
-|---|------|-------------|-------------|---------|
-| **教学模式** | 苏格拉底引导式 | 一问一答 | 题海战术 | 单向灌输 |
-| **错题处理** | 8 维诊断 + 知识溯源 | 需要你主动追问 | 只看对错 | 没有 |
-| **推理过程** | 可视化推理路径 | 文字推导 | 看参考答案 | 看录播讲解 |
-| **个性化** | 画像 + ZPD + FSRS 动态适应 | 依赖你的 prompt 能力 | 固定难度分级 | 统一课程 |
-| **学习闭环** | 画像→路径→评估→循环 | ❌ | ❌ | ❌ |
-| **部署方式** | Docker / Electron 桌面端 | Web | App | Web |
-| **数据归属** | 你自己的服务器 | OpenAI 服务器 | 平台服务器 | 平台服务器 |
-| **面向受众** | 大学生系统性深度学习 | 所有人 | K12 | 所有人 |
-| **开源** | ✅ MIT | ❌ | ❌ | ❌ |
-
----
-
-## 为什么是现在，为什么是桌面端
-
-2025 年，大模型 API 价格已经降到学生可以承受的水平（智谱 GLM-4-Flash 千 tokens 不到一分钱）。技术不再是你用不起的奢侈品——你缺的从来不是好模型，是好工具。
-
-而 ZEdu 选择以 Electron 桌面端交付，原因很简单：**浏览器是分心的源头**。你在浏览器里打开一个学习工具，弹窗通知、B站收藏、微博热搜都在同一个应用框架里。桌面端是独立窗口，是仪式感，是你对自己说"我现在要学了"的动作。
-
----
-
-## 快速开始
-
-### Docker Compose（推荐，3 分钟部署）
-
-```bash
-git clone https://github.com/EXtreameChallenge/ZEdu.git
-cd ZEdu/ai-edu-assistant-main
-cp .env.example .env
-
-# 编辑 .env，填入你的 API Key
-# JWT_SECRET=随机32位字符串
-# BIGMODEL_API_KEY=你的智谱API Key
-# IFLYTEK_APP_ID=你的讯飞AppID
-# IFLYTEK_API_KEY=你的讯飞API Key
-# IFLYTEK_API_SECRET=你的讯飞API Secret
-
-docker compose up -d
-```
-
-打开浏览器访问 `http://localhost`，开始你的第一轮苏格拉底对话。
-
-### Electron 桌面端（Windows 安装包）
-
-从 [Releases](https://github.com/EXtreameChallenge/ZEdu/releases) 下载 `ZEdu-Setup-x.x.x.exe`，双击安装。
-
-内置 JRE 17 + 后端 fat jar + 前端静态资源，不需要装 JDK、不需要装 Node.js、不需要配置环境变量。安装即用。
-
-### 本地开发
-
-```bash
-# 后端
-cd ai-chat
-./mvnw spring-boot:run
-
-# 前端
-cd ai-chat-frontend
-npm install && npm run dev
-
-# 桌面端
-cd desktop
-npm install && npm run dev
-```
-
----
+- **Profiler**：分析学生历史答题数据，识别薄弱知识点和认知水平
+- **Planner**：基于BKT知识追踪和最近发展区（ZPD）理论，规划最优学习路径
+- **Tutor**：苏格拉底6阶段引导，通过提问启发学生，不直接给答案
+- **Verifier**：数学题做数值容差比对，编程题用AST+测试用例，文科做质量评估（低置信度不判对错）
+
+## 功能特性
+
+### 学生端
+- 多模式对话：普通问答 / 苏格拉底辅导 / 自适应出题 / 作文批改
+- 个性化资源中心：规划→知识库接地→生成→审校→（按意见）修订 的多智能体流水线产出六类资源——讲解文档、思维导图（ReactFlow交互渲染）、练习题库、拓展阅读、代码实操、多模态教学动画（分镜驱动网页播放器）；阶段进度落库可轮询、可取消、刷新可续，引用溯源与审校结论随资源展示
+- 学习仪表盘可视化：掌握度分布柱状图、学习状态构成、知识图谱×BKT掌握度着色视图
+- 8维错题诊断：概念/策略/计算/迁移/审题/负荷/遗忘/前置缺失
+- BKT知识追踪：80个预定义知识点实时掌握度更新
+- GraphRAG知识引擎：三路检索 + 混合Rerank（语义×词法） + 引用溯源
+- 自建高校课程知识库《人工智能导论》：13 章团队自撰讲义（308 个知识块、约 12.2 万字），标题感知分块、章节路径入向量、引用可回溯到具体小节；`scripts/build_course_kb.py` 一条命令重建并跑 13 道课内题命中自检（当前 13/13）
+- 自研间隔重复调度：按遗忘曲线稳定性乘子安排复习时间（四档评分，非 fsrs 库）
+- 知识图谱可视化：知识点层级关系和前置依赖一目了然
+
+### 教师端
+- 班级管理：创建班级、添加学生、查看班级概况
+- 学生画像：每个学生的掌握度雷达图和薄弱点分析
+- 班级统计：整体掌握度分布、常见错题、学习进度
+
+### 工程特性
+- 内容安全：敏感词过滤 + AI免责声明 + 输入限制
+- 合规设计：年龄确认（14+）+ 隐私政策 + 数据可删除
+- API限流：防止滥用和恶意调用
+- 多模型容错：多Key轮询 + 降级链 + 响应缓存
 
 ## 技术栈
 
-| 层级 | 技术 | 说明 |
-|------|------|------|
-| **后端语言** | Java 17 | LTS，生态成熟 |
-| **后端框架** | Spring Boot 3.3.5 | Web / WebFlux / Security / JPA / WebSocket / Actuator |
-| **AI 框架** | LangChain4j 0.35.0 | OpenAI 兼容协议，多模型路由 |
-| **AI 模型** | 智谱 GLM + 讯飞星火 + SiliconFlow Embedding | 国产模型，学生友好价格 |
-| **数据库** | MySQL 8.0 + Flyway | 关系型存储 + 版本化迁移 |
-| **缓存** | Redis 7 | 会话缓存 + 限流 + 排行榜 |
-| **向量存储** | Chroma | RAG 检索增强生成 |
-| **监控** | Micrometer + Prometheus + Resilience4j | 可观测性 + 熔断保护 |
-| **前端框架** | React 19 + TypeScript 5.6 | 类型安全，组件化 |
-| **构建工具** | Vite 6 | 极速 HMR |
-| **UI 样式** | Tailwind CSS 4.3 | 原子化 CSS |
-| **状态管理** | Zustand 5 | 轻量、无 boilerplate |
-| **实时通信** | STOMP + WebSocket | 流式对话 + 通知推送 |
-| **图表** | Recharts + Mermaid + ReactFlow | 数据图 + 知识图谱 + 流程图 |
-| **数学渲染** | KaTeX | LaTeX 数学公式 |
-| **桌面端** | Electron 33.4 + electron-builder | NSIS 安装包 |
-| **部署** | Docker Compose | MySQL + Redis + Backend + Frontend 一键启动 |
+### 后端
+- **语言**：Python 3.11+
+- **框架**：FastAPI 0.115+
+- **Agent编排**：LangGraph 0.2+（StateGraph + 条件边）
+- **数据库**：SQLite（SQLAlchemy 2.0异步 + aiosqlite + NullPool + WAL）
+- **向量库**：ChromaDB
+- **知识追踪**：BKT 贝叶斯知识追踪（自实现4参数HMM，参考 pyBKT 算法）
+- **间隔重复**：自研乘子式调度（借 FSRS 的遗忘曲线思想，未引入 fsrs 库）
+- **认证**：JWT（python-jose）
+- **文档解析**：python-docx（含表格）/ pypdf（逐页带真实页码）
 
----
+### 前端
+- **框架**：React 19 + TypeScript
+- **构建**：Vite 6
+- **样式**：Tailwind CSS 4
+- **状态管理**：Zustand
+- **图表**：Recharts
+- **图谱可视化**：ReactFlow
+- **Markdown渲染**：react-markdown + remark-gfm
 
-## 三平台直达
+### AI模型
+- **主模型**：智谱GLM-4-Flash
+- **降级模型**：通义千问 Qwen-Turbo / 讯飞星火 generalv3.5（可选通道，配置 XINGHUO_API_KEY 启用）
+- **嵌入模型**：智谱 embedding-3（API 调用，1024 维）
 
-<p align="center">
-  <a href="https://github.com/EXtreameChallenge/ZEdu">
-    <img src="https://img.shields.io/badge/GitHub-View_Repo-181717?style=for-the-badge&logo=github" alt="GitHub">
-  </a>
-  &nbsp;
-  <a href="https://gitee.com/EXtreameChallenge/ZEdu">
-    <img src="https://img.shields.io/badge/Gitee-View_Repo-C71D23?style=for-the-badge&logo=gitee" alt="Gitee">
-  </a>
-  &nbsp;
-  <a href="https://gitcode.com/EXtreameChallenge/ZEdu">
-    <img src="https://img.shields.io/badge/GitCode-View_Repo-007AFF?style=for-the-badge" alt="GitCode">
-  </a>
-</p>
+## 快速开始
 
----
+### 环境要求
+- Python 3.11+
+- Node.js 18+
+- npm 或 pnpm
 
-## 开源协议 & 结语
+### 1. 克隆项目
+```bash
+git clone https://github.com/EXtreameChallenge/ZEdu.git
+cd ZEdu
+```
 
-本项目基于 **MIT License** 开源。你可以随意使用、修改、商用——只要保留原始版权声明。
+### 2. 配置环境变量
+```bash
+cp .env.example .env
+# 编辑 .env，填入你的API密钥
+```
 
-ZEdu 不承诺让你变成学霸。它承诺的是另一件事：**当你坐在电脑前，决定今晚不再划水的时候，有一个工具不会辜负你的决心。**
+### 3. 启动后端
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+后端将在 http://localhost:8000 启动，API文档在 http://localhost:8000/docs
 
-它不问你是不是天才，不问你的 GPA 起点是多少。它只做一件事——当你对自己说"我要学"的时候，它在旁边，准备好了。
+### 4. 启动前端
+```bash
+cd frontend
+npm install
+npm run dev
+```
+前端将在 http://localhost:5173 启动
 
----
+### 5. 演示账号
+- 教师：teacher@demo.com / demo123
+- 学生：student1@demo.com / demo123（另有 student2/student3@demo.com）
 
-<p align="center">
-  <sub>Built with ☕ and sleepless nights by <a href="https://github.com/EXtreameChallenge">ExtreameChallenge</a></sub>
-</p>
+## 项目结构
+
+```
+ZEdu-Duo/
+├── backend/              # Python FastAPI后端
+│   ├── agents/           # LangGraph多智能体（核心）
+│   ├── rag/              # GraphRAG知识引擎
+│   ├── tutor/            # 教育核心算法（BKT/间隔重复调度/错题诊断）
+│   ├── teacher/          # 教师端
+│   ├── auth/             # 认证
+│   ├── security/         # 安全中间件
+│   ├── content_safety/   # 内容安全
+│   ├── profile/          # 学生画像（6维）
+│   ├── plan/             # 学习计划生成
+│   ├── personas/         # 人格系统（4种教学人格）
+│   ├── evolution/        # 画像自进化（辩证式）
+│   ├── memory/           # 双维度记忆（总结/检索）
+│   ├── resources/        # 个性化资源中心（六类资源流水线）
+│   ├── skills/           # 技能系统
+│   ├── settings/         # 系统设置
+│   ├── approval/         # 审批系统
+│   ├── tools/            # 工具系统（计算器/代码执行/知识检索）
+│   ├── desktop/          # 桌面端适配（静态托管/环境）
+│   └── compression/      # 上下文压缩
+├── frontend/             # React前端
+│   └── src/
+│       ├── pages/        # 页面组件（10页）
+│       ├── components/   # 通用组件
+│       ├── hooks/        # 自定义Hooks（缓存/语音/动效偏好）
+│       ├── i18n/         # 中英国际化
+│       ├── stores/       # Zustand状态
+│       └── api/          # API客户端
+├── docs/                 # 设计文档（13篇 + 3篇比赛文档）
+├── tests/                # 后端 pytest 用例（525 个：515 通过 / 10 跳过）
+├── scripts/              # 工具脚本
+├── knowledge-base/       # 预定义知识图谱 + course/ 自建课程讲义（13章）
+└── .loop/                # Loop Engineering状态文件
+```
+
+## 测试
+
+项目采用「后端 pytest + 前端 Vitest + E2E Playwright + 性能 Locust」四层测试金字塔。所有测试默认跑在隔离的临时 SQLite 库上，**不会触碰演示库 `data/zedu_duo.db`**（`tests/conftest.py` 在会话结束时会校验演示库未被改动）。
+
+### 后端测试（pytest）
+
+```bash
+# 仓库根目录，使用项目自带 venv
+.\venv\Scripts\python.exe -m pytest tests/ -v --tb=short
+
+# 只跑某一类
+.\venv\Scripts\python.exe -m pytest tests/test_data_privacy_compliance.py -v
+.\venv\Scripts\python.exe -m pytest tests/test_security.py -v
+```
+
+`pytest.ini` 已配置 `asyncio_mode=auto`，异步用例无需手动装饰；`addopts` 默认带 `--cov=backend`，跑完整套件会自动输出覆盖率。
+
+### 前端测试（Vitest + node:test）
+
+```bash
+cd frontend
+npm test            # vitest run（src/**/*.test.ts(x)）
+npm run test:unit   # node:test 跑 i18n / electron-main / markdown 纯逻辑用例
+npm run test:all    # vitest + node:test 全量
+```
+
+### E2E 测试（Playwright）
+
+```bash
+cd frontend
+npx playwright install --with-deps   # 首次安装浏览器
+npx playwright test                  # 跑 e2e/*.spec.ts
+```
+
+E2E 需要后端（:8000）与前端（:5173）同时启动；用例会为每个场景注册独立用户，互不污染。
+
+### 性能测试（Locust）
+
+```bash
+# 先启动后端，再在仓库根目录压测
+.\venv\Scripts\locust.exe -f locustfile.py --headless `
+  -u 10 -r 2 -t 60s --csv=.temp/perf_results --host http://127.0.0.1:8000
+```
+
+### 覆盖率报告
+
+```bash
+# 后端：终端 + XML（coverage.xml）
+.\venv\Scripts\python.exe -m pytest tests/ --cov=backend --cov-report=term --cov-report=xml
+
+# 前端：v8 覆盖率
+cd frontend && npm run test:coverage
+```
+
+## 贡献指南
+
+### 代码规范
+
+- **Python**：[Ruff](https://docs.astral.sh/ruff/) 同时做 lint 与 format（配置见根目录 `ruff.toml`，line-length=120，启用 E/W/F/I/B/UP/C4）。
+- **TypeScript/TSX**：ESLint v9（flat config）+ Prettier 格式化。
+
+### Commit 规范（Conventional Commits）
+
+提交信息统一遵循 [Conventional Commits](https://www.conventionalcommits.org/)，由 commitlint 在 `commit-msg` 钩子强制校验：
+
+```
+<type>(<scope>): <subject>
+```
+
+常用 type：`feat` / `fix` / `test` / `docs` / `refactor` / `perf` / `style` / `chore` / `ci`。
+
+### 提交前钩子（pre-commit + husky）
+
+```bash
+pip install pre-commit
+pre-commit install
+
+cd frontend && npm install   # husky 钩子自动安装
+```
+
+### 提 PR 前自检清单
+
+1. `ruff check .` 与 `cd frontend && npx tsc --noEmit`、`npx eslint src/` 全部通过。
+2. 新增/修改后端行为时补充对应 pytest 用例；`pytest tests/` 全绿。
+3. 前端改动跑 `npm run test:all`。
+4. 涉及认证/隐私/安全的改动，确认 `tests/test_data_privacy*.py`、`tests/test_security*.py` 通过。
+5. Commit message 符合 Conventional Commits。
+
+## CI/CD
+
+GitHub Actions（`.github/workflows/ci.yml`）在 push 到 `main/master/develop` 及向 `main/master` 提 PR 时触发，分两个并行 Job：
+
+- **backend**（ubuntu-latest, Python 3.11）：装依赖 → `ruff check .` → `pytest tests/ --cov=backend` → `pip-audit` 依赖漏洞扫描。
+- **frontend**（ubuntu-latest, Node 20）：`npm ci` → `tsc --noEmit` → `eslint src/` → 跑单测 → `npm run build` → `npm audit`。
+
+## 开发路线图
+
+- [x] 项目骨架和基础架构
+- [x] 四阶段Agent流水线核心（LangGraph 7节点图 + SSE过程可视化）
+- [x] 学生端完整闭环（画像→规划→引导→验证→复习）
+- [x] 教师端MVP（班级/统计/画像）
+- [x] 测试和文档（后端 pytest 525 用例 + 前端 Vitest 81 用例 + Playwright E2E 10 用例）
+- [x] 个性化资源中心（5类多模态学习资源生成）
+- [x] Docker 部署（docker-compose + Nginx + systemd 脚本）
+- [x] Electron 桌面端壳（打包配置就绪）
+
+## 许可证
+
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
+
+## 致谢
+
+感谢以下开源项目的启发：
+- [MITS](https://github.com/Siesher/MITS) — 四阶段流水线架构
+- [TraceBack](https://github.com/zxh123456-source/Trace-Back) — 苏格拉底错题系统
+- [pyBKT](https://github.com/CAHLR/pyBKT) — 贝叶斯知识追踪
+- [LangGraph](https://github.com/langchain-ai/langgraph) — 多智能体编排框架
+- [fsrs4anki](https://github.com/open-spaced-repetition/fsrs4anki) — 间隔重复遗忘曲线的调度思想参考（代码自研）
+- [Mr. Ranedeer](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor) — 六维个性化配置设计
+- 辩证式自进化画像（Hermes 思路）— 正题/反题/合题的画像演进机制
+- 多智能体协作可视化（Marvis 风格）— 智能体执行链实时呈现
+
+主要开源依赖：
+- [lucide-react](https://github.com/lucide-icons/lucide) — 图标库
+- [framer-motion](https://github.com/motiondivision/motion) — 动效
+- [recharts](https://github.com/recharts/recharts) — 数据可视化
+- [reactflow](https://github.com/xyflow/xyflow) — 知识图谱渲染
+- [react-markdown](https://github.com/remarkjs/react-markdown) + remark-gfm — Markdown 渲染

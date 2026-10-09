@@ -1,0 +1,99 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# 虚拟环境
+venv/
+env/
+!packaging/env/
+.venv/
+
+# 环境变量（含密钥，绝对不能提交）
+.env
+.env.local
+.env.*.local
+
+# 数据库
+*.db
+*.sqlite
+*.sqlite3
+data/
+!backend/personas/data/
+!backend/skills/data/
+chroma_db/
+
+# 上传文件
+uploads/
+temp/
+.temp/
+
+# 日志
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Electron
+out/
+release/
+*.exe
+*.msi
+*.dmg
+*.AppImage
+
+# 测试
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+coverage/
+perf_results_*.csv
+frontend/playwright-report/
+frontend/test-results/
+
+# 构建产物
+*.pyc
+*.pyo
+
+# 本地临时验证脚本与测试期数据库备份，不进提交包
+.scratch/
+
+# 工具运行目录（豆包/IDE 等生成，非项目资产）
+.design-suite/
+.dumate/
+.tmp/
+
+# 过程截图（产品展示页截图等，非源码资产）
+_shots/
+
+# 打包/视频产物（体积大，不入库，避免平台 100MB 限制）
+submission/*.zip
+docs/competition/*.mp4
+
+# spec 每次构建从 frontend/package.json 重新生成
+packaging/version.txt
+# electron-builder 暂存产物（build-desktop.ps1 生成）
+frontend/build/
