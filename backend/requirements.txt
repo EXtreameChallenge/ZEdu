@@ -1,0 +1,59 @@
+# ===== Web框架 =====
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+
+# ===== 数据库 =====
+sqlalchemy[asyncio]==2.0.36
+aiosqlite==0.20.0
+
+# ===== 认证 =====
+# python-jose 3.3.0：上游已停止维护（最后发布 2021），但 JWT 签发/验证逻辑稳定；
+#   已知风险点在其依赖 cryptography（CVE 由 pip audit 跟踪），升级 cryptography 即可缓解。
+#   长期替代方案：迁移到 PyJWT（api 兼容，改动量小）。
+python-jose[cryptography]==3.3.0
+# passlib 1.7.4：上游已归档（2020 后无更新），bcrypt 后端仍可用；
+#   长期替代方案：直接用 bcrypt 库（passlib 已在内部封装 bcrypt，迁移成本低）。
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.1
+pydantic==2.10.4
+pydantic-settings==2.7.1
+
+# ===== 数据库迁移 =====
+alembic==1.14.0
+
+# ===== AI Agent =====
+langgraph==0.2.52
+
+# ===== MCP 外部工具接入（P3）：直连 mcp Python SDK，不经过 langchain-mcp-adapters =====
+mcp>=1.2,<2
+
+# ===== 定时任务（P4：学习提醒 / 每日复习建议，AsyncIOScheduler + SQLiteJobStore） =====
+apscheduler>=3.10,<4
+
+# ===== LLM客户端 =====
+httpx==0.28.1
+tenacity==9.0.0
+
+# ===== 向量数据库 =====
+# 嵌入计算走智谱 embedding API（backend/rag/embeddings.py），本地不再驻留 torch
+# chromadb 0.5.x：0.6.x 有 breaking changes（客户端 API 重构），升级需单独验证
+chromadb==0.5.23
+
+# ===== 教育算法：BKT 与间隔重复调度均为 backend/tutor 自研实现，无第三方算法库 =====
+
+# ===== 文档解析 =====
+python-docx==1.1.2
+pypdf==5.1.0
+
+# ===== 工具 =====
+loguru==0.7.3
+
+# ===== 代码质量 =====
+ruff==0.8.4
+
+# ===== 测试 =====
+pytest==8.3.4
+pytest-asyncio==0.25.0
+
+matplotlib>=3.8.0
