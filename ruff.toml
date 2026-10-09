@@ -1,0 +1,59 @@
+# Ruff 配置 — ZEdu Duo（项目根目录）
+# 用法：在项目根执行 `ruff check .`（同时覆盖 backend/ 与 tests/），或 `ruff check . --fix`
+# 说明：tests/ 在项目根而非 backend/ 下，因此配置上移到根目录后 ruff 才能同时正确检查两端。
+line-length = 120
+target-version = "py311"
+
+exclude = [
+    ".git",
+    "__pycache__",
+    ".pytest_cache",
+    ".ruff_cache",
+    "venv",
+    ".venv",
+    "build",
+    "dist",
+    "node_modules",
+    ".temp",
+    ".loop",
+    ".scratch",
+    "submission",
+    "data",
+    "knowledge-base",
+    "_shots",
+]
+
+[lint]
+select = ["E", "W", "F", "I", "B", "UP", "C4"]
+ignore = ["E501", "B008"]
+
+[lint.isort]
+known-first-party = ["backend"]
+
+[lint.per-file-ignores]
+"tests/*" = ["F401", "B008", "E402", "I001", "UP006", "UP035", "UP045", "B905", "B007", "F841"]
+"__init__.py" = ["F401"]
+"backend/admin/routes.py" = ["E741"]
+"backend/agents/checkpoints.py" = ["E702"]
+"backend/agents/loops/__init__.py" = ["UP035"]
+"backend/agents/loops/base.py" = ["B905"]
+"backend/agents/loops/code_act_loop.py" = ["C416"]
+"backend/agents/loops/react_loop.py" = ["B905"]
+"backend/agents/state.py" = ["UP042"]
+"backend/models.py" = ["UP042"]
+"backend/alembic/env.py" = ["I001"]
+"backend/chat/routes.py" = ["B904"]
+"backend/dependencies.py" = ["B904"]
+"backend/evolution/routes.py" = ["B904"]
+"backend/main.py" = ["E402", "W293"]
+"backend/plan/routes.py" = ["E402"]
+"backend/profile/routes.py" = ["B904"]
+"backend/rag/knowledge_graph.py" = ["B007"]
+"backend/rag/retriever.py" = ["B905"]
+"backend/rag/routes.py" = ["B904"]
+"backend/rag/vectorstore.py" = ["B904"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
