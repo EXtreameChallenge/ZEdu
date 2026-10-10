@@ -13,14 +13,14 @@ AIGC:
 
 > 双端双角色多智能体AI教育平台 — 让学生真正学会，而不是直接给答案
 
-**当前版本：v4.0.41** | [查看更新日志](CHANGELOG.md)
+**当前版本：v4.0.42** | [查看更新日志](CHANGELOG.md)
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-green.svg)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-19+-61dafb.svg)](https://react.dev/)
 [![LangGraph](https://img.shields.io/badge/LangGraph-0.2+-orange.svg)](https://langchain-ai.github.io/langgraph/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-4.0.41-gold.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.0.42-gold.svg)](CHANGELOG.md)
 
 ## 项目简介
 
@@ -41,7 +41,7 @@ ZEdu Duo 是一个基于多智能体协作的AI教育平台。"Duo"有三重含�
 |------|------|------|
 | ZEdu v6.x | 2026-07 | 第一代 AI 私教（Java / Spring Boot / LangChain4j） |
 | ZEdu Lite | 2026-08 | 轻量重装版（Python / FastAPI，5 分钟开箱即用，教育 AI 核心验证） |
-| **ZEdu Duo（本仓库）** | 2026-09 至今 | 双端双角色多智能体平台，当前 v4.0.41 |
+| **ZEdu Duo（本仓库）** | 2026-09 至今 | 双端双角色多智能体平台，当前 v4.0.42 |
 | ZEdu Liquid Glass / Experiment | 2026-09 | 设计 / 实验变体（与 Duo 同构） |
 
 ### 核心创新：四阶段Agent流水线
@@ -117,8 +117,8 @@ Profiler（画像分析）→ Planner（路径规划）→ Tutor（苏格拉底�
 
 ### 1. 克隆项目
 ```bash
-git clone https://github.com/EXtreameChallenge/ZEdu.git
-cd ZEdu
+git clone <repository-url>
+cd ZEdu-Duo
 ```
 
 ### 2. 配置环境变量
@@ -130,10 +130,20 @@ cp .env.example .env
 ### 3. 启动后端
 ```bash
 cd backend
+python -m venv venv
+# Windows: venv\Scripts\activate
+# Linux/Mac: source venv/bin/activate
 pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 8000
+python run.py
 ```
 后端将在 http://localhost:8000 启动，API文档在 http://localhost:8000/docs
+
+### 3.1 导入自建课程知识库（可选，一条命令）
+```bash
+cd ..                       # 回到仓库根目录
+python scripts/build_course_kb.py --rebuild --check
+```
+把 `knowledge-base/course/` 的 13 章讲义切块入库（308 块），并跑 13 道课内题的 top-3 命中自检；`--rebuild` 会先清空该库再重建，重复执行不会产生同章旧版残留。
 
 ### 4. 启动前端
 ```bash
@@ -199,6 +209,9 @@ ZEdu-Duo/
 # 只跑某一类
 .\venv\Scripts\python.exe -m pytest tests/test_data_privacy_compliance.py -v
 .\venv\Scripts\python.exe -m pytest tests/test_security.py -v
+
+# 收集用例数量（不执行）
+.\venv\Scripts\python.exe -m pytest tests/ --collect-only -q
 ```
 
 `pytest.ini` 已配置 `asyncio_mode=auto`，异步用例无需手动装饰；`addopts` 默认带 `--cov=backend`，跑完整套件会自动输出覆盖率。
@@ -208,6 +221,7 @@ ZEdu-Duo/
 ```bash
 cd frontend
 npm test            # vitest run（src/**/*.test.ts(x)）
+npm run test:watch  # 监听模式
 npm run test:unit   # node:test 跑 i18n / electron-main / markdown 纯逻辑用例
 npm run test:all    # vitest + node:test 全量
 ```
@@ -218,6 +232,8 @@ npm run test:all    # vitest + node:test 全量
 cd frontend
 npx playwright install --with-deps   # 首次安装浏览器
 npx playwright test                  # 跑 e2e/*.spec.ts
+npx playwright test --headed         # 有头模式调试
+npx playwright show-report          # 查看上一次 HTML 报告
 ```
 
 E2E 需要后端（:8000）与前端（:5173）同时启动；用例会为每个场景注册独立用户，互不污染。
@@ -228,6 +244,32 @@ E2E 需要后端（:8000）与前端（:5173）同时启动；用例会为每个
 # 先启动后端，再在仓库根目录压测
 .\venv\Scripts\locust.exe -f locustfile.py --headless `
   -u 10 -r 2 -t 60s --csv=.temp/perf_results --host http://127.0.0.1:8000
+```
+
+`-u` 为并发用户数，`-r` 为每秒孵化速率；基线报告见 `docs/performance/`。
+
+### 测试架构
+
+```
+tests/                          # 后端 pytest 用例（与 backend/ 平级）
+├── conftest.py                 # 全局夹具：隔离 DB、Mock LLM、JSON 状态重定向
+├── test_auth / test_data_privacy*.py   # 认证与隐私合规
+├── test_security*.py           # 安全（SQLi/XSS/暴力破解/中间件）
+├── test_api_contract.py        # 请求/响应契约
+├── test_llm_*.py / test_resilience*.py # LLM 容错与降级
+├── test_plan_*.py / test_tutor*        # 计划生成与 BKT/错题
+└── test_rag_*.py / test_resources_*.py  # 检索与资源流水线
+
+frontend/src/                   # 前端单测，就近放在被测文件旁
+├── stores/*.test.ts            # Zustand stores（auth/lang/theme）
+├── hooks/*.test.ts             # 自定义 hooks（useCachedFetch/useToast）
+├── components/*.test.tsx       # 通用组件（Toast/Spinner/ErrorBoundary）
+└── pages/*.test.tsx            # 页面（Login/Chat/Dashboard）
+
+frontend/e2e/                   # Playwright 端到端
+├── auth.spec.ts / chat.spec.ts / dashboard.spec.ts
+├── plan.spec.ts / wrongbook.spec.ts
+└── helpers.ts                  # 独立用户注册/登录/清理夹具
 ```
 
 ### 覆盖率报告
@@ -245,7 +287,16 @@ cd frontend && npm run test:coverage
 ### 代码规范
 
 - **Python**：[Ruff](https://docs.astral.sh/ruff/) 同时做 lint 与 format（配置见根目录 `ruff.toml`，line-length=120，启用 E/W/F/I/B/UP/C4）。
+  ```bash
+  ruff check . --fix     # 后端 + tests 全量
+  ruff format backend tests
+  ```
 - **TypeScript/TSX**：ESLint v9（flat config）+ Prettier 格式化。
+  ```bash
+  cd frontend && npx eslint src/ --max-warnings 100
+  npx tsc --noEmit       # 类型检查
+  npx prettier --write src
+  ```
 
 ### Commit 规范（Conventional Commits）
 
@@ -253,18 +304,26 @@ cd frontend && npm run test:coverage
 
 ```
 <type>(<scope>): <subject>
+
+<body>
 ```
 
-常用 type：`feat` / `fix` / `test` / `docs` / `refactor` / `perf` / `style` / `chore` / `ci`。
+常用 type：`feat` / `fix` / `test` / `docs` / `refactor` / `perf` / `style` / `chore` / `ci`。示例：
+`test(privacy): add data privacy compliance suite`、`fix(auth): persist soft-delete flags via explicit UPDATE`。
 
 ### 提交前钩子（pre-commit + husky）
 
 ```bash
+# 一次性安装（Python 侧）
 pip install pre-commit
 pre-commit install
 
-cd frontend && npm install   # husky 钩子自动安装
+# 前端 husky 钩子在 npm install 时自动安装（package.json prepare: husky）
+cd frontend && npm install
 ```
+
+- `pre-commit`（Python/通用）：`ruff check --fix`、`ruff format`、prettier、`tsc --noEmit`，以及 trailing-whitespace / end-of-file / check-yaml/json / merge-conflict 基础检查。
+- `husky + lint-staged`（前端）：暂存的 `*.{ts,tsx}` 自动 `eslint --fix`，`*.{css,md,json}` 自动 `prettier --write`。
 
 ### 提 PR 前自检清单
 
@@ -278,8 +337,10 @@ cd frontend && npm install   # husky 钩子自动安装
 
 GitHub Actions（`.github/workflows/ci.yml`）在 push 到 `main/master/develop` 及向 `main/master` 提 PR 时触发，分两个并行 Job：
 
-- **backend**（ubuntu-latest, Python 3.11）：装依赖 → `ruff check .` → `pytest tests/ --cov=backend` → `pip-audit` 依赖漏洞扫描。
-- **frontend**（ubuntu-latest, Node 20）：`npm ci` → `tsc --noEmit` → `eslint src/` → 跑单测 → `npm run build` → `npm audit`。
+- **backend**（ubuntu-latest, Python 3.11）：装依赖 → `ruff check .` → `pytest tests/ --cov=backend`（输出 coverage.xml 并上传为 artifact）→ `pip-audit` 依赖漏洞扫描（`continue-on-error`）。
+- **frontend**（ubuntu-latest, Node 20）：`npm ci` → `tsc --noEmit` → `eslint src/ --max-warnings 100` → 跑单测 → `npm run build` → `npm audit --audit-level=high`（`continue-on-error`）。
+
+此外仓库内还有 i18n 完整性检查脚本与漏洞扫描报告（见 `docs/security/`）。
 
 ## 开发路线图
 
@@ -287,7 +348,7 @@ GitHub Actions（`.github/workflows/ci.yml`）在 push 到 `main/master/develop`
 - [x] 四阶段Agent流水线核心（LangGraph 7节点图 + SSE过程可视化）
 - [x] 学生端完整闭环（画像→规划→引导→验证→复习）
 - [x] 教师端MVP（班级/统计/画像）
-- [x] 测试和文档（后端 pytest 525 用例 + 前端 Vitest 81 用例 + Playwright E2E 10 用例）
+- [x] 测试和文档（后端 pytest 525 用例 + 前端 Vitest 81 用例 + Playwright E2E 10 用例 + 13篇设计文档）
 - [x] 个性化资源中心（5类多模态学习资源生成）
 - [x] Docker 部署（docker-compose + Nginx + systemd 脚本）
 - [x] Electron 桌面端壳（打包配置就绪）
